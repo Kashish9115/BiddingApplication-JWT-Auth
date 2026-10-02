@@ -1,0 +1,8 @@
+<!doctype html><html lang="en" xmlns:th="http://www.thymeleaf.org"><head th:replace="~{fragments :: head('Verify OTP')}"></head><body><div class="auth-shell"><div class="auth-card text-center"><div class="brand">B</div><h2>Check your email</h2><p class="muted">Enter the 6-digit OTP sent to your registered email.</p><div th:if="${error}" class="alert soft-alert" th:text="${error}"></div>
+    <form method="post" action="/verify-email-otp">
+
+        <input type="hidden"
+               name="token"
+               th:value="${recoveryToken}">
+        <input class="form-control code mb-3" name="otp" maxlength="6" pattern="[0-9]{6}" inputmode="numeric" placeholder="000000" required>
+        <button class="btn btn-accent w-100">Verify OTP</button></form></div></div></body></html>

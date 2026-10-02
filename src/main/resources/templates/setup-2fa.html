@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Set up 2FA')}"></head>
+<body>
+<div class="auth-shell">
+    <div class="auth-card text-center">
+        <div class="brand">B</div>
+        <h2>Secure your account</h2>
+        <p class="muted">Scan this QR code with Google Authenticator.</p>
+
+        <div th:if="${error}" class="alert soft-alert" th:text="${error}"></div>
+
+        <div class="qr">
+            <img th:src="'data:image/png;base64,' + ${qrCode}"
+                 alt="Google Authenticator QR code">
+        </div>
+
+        <p class="muted small mt-3">
+            After scanning, enter the current 6-digit code.
+        </p>
+
+        <p class="text-muted small">
+            Make sure your phone's Date & Time is set to
+            <strong>Automatic</strong>.
+        </p>
+
+        <form method="post" action="/2fa/setup">
+            <input type="hidden"
+                   name="token"
+                   th:value="${pendingToken}">
+
+            <input class="form-control code mb-3"
+                   name="code"
+                   maxlength="6"
+                   minlength="6"
+                   pattern="[0-9]{6}"
+                   inputmode="numeric"
+                   autocomplete="one-time-code"
+                   placeholder="000000"
+                   required>
+
+            <button type="submit"
+                    class="btn btn-accent w-100">
+                Verify & Continue
+            </button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

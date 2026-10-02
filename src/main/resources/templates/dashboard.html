@@ -1,0 +1,275 @@
+<!--<!doctype html><html lang="en" xmlns:th="http://www.thymeleaf.org"><head th:replace="~{fragments :: head('Dashboard')}"></head><body class="dashboard"><nav class="navbar nav-soft"><div class="container"><span class="navbar-brand fw-semibold">Bidding Workspace</span>-->
+<!--    <a href="/logout" class="btn btn-outline-soft btn-sm">Sign out</a></div>-->
+<!--</nav><main class="container py-5"><div class="panel"><span class="eyebrow">Dashboard</span><h1 class="mt-2">Welcome, <span th:text="${user.fullName}">User</span></h1><p class="muted">Your account is securely authenticated.</p></div><div class="row g-3 mt-1"><div class="col-md-4"><div class="info"><small>Email</small><strong th:text="${user.email}">email</strong></div></div><div class="col-md-4"><div class="info"><small>Role</small><strong th:text="${user.role}">USER</strong></div>-->
+<!--</div><div class="col-md-4">-->
+<!--    <div class="info"><small>2FA-->
+<!--    </small><strong>Enabled-->
+<!--    </strong></div></div></div></main></body></html>-->
+
+<!--<!doctype html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+
+<!--<head th:replace="~{fragments :: head('Dashboard')}"></head>-->
+
+<!--<body class="dashboard">-->
+
+<!--<nav class="navbar nav-soft">-->
+<!--    <div class="container">-->
+
+<!--        <span class="navbar-brand fw-semibold">-->
+<!--            Bidding Workspace-->
+<!--        </span>-->
+
+<!--        &lt;!&ndash; Logout &ndash;&gt;-->
+<!--        <form th:action="@{/logout}" method="post" class="m-0">-->
+<!--            <button type="submit"-->
+<!--                    class="btn btn-outline-soft btn-sm">-->
+<!--                Sign out-->
+<!--            </button>-->
+<!--        </form>-->
+
+<!--    </div>-->
+<!--</nav>-->
+
+
+<!--<main class="container py-5">-->
+
+<!--    <div class="panel">-->
+
+<!--        <span class="eyebrow">-->
+<!--            Dashboard-->
+<!--        </span>-->
+
+<!--        <h1 class="mt-2">-->
+<!--            Welcome,-->
+<!--            <span th:text="${user.fullName}">-->
+<!--                User-->
+<!--            </span>-->
+<!--        </h1>-->
+
+<!--        <p class="muted">-->
+<!--            Your account is securely authenticated.-->
+<!--        </p>-->
+
+<!--    </div>-->
+
+
+<!--    <div class="row g-3 mt-1">-->
+
+<!--        &lt;!&ndash; Email &ndash;&gt;-->
+<!--        <div class="col-md-4">-->
+<!--            <div class="info">-->
+
+<!--                <small>-->
+<!--                    Email-->
+<!--                </small>-->
+
+<!--                <strong th:text="${user.email}">-->
+<!--                    email-->
+<!--                </strong>-->
+
+<!--            </div>-->
+<!--        </div>-->
+
+
+<!--        &lt;!&ndash; Role &ndash;&gt;-->
+<!--        <div class="col-md-4">-->
+<!--            <div class="info">-->
+
+<!--                <small>-->
+<!--                    Role-->
+<!--                </small>-->
+
+<!--                <strong th:text="${user.role}">-->
+<!--                    USER-->
+<!--                </strong>-->
+
+<!--            </div>-->
+<!--        </div>-->
+
+
+<!--        &lt;!&ndash; 2FA &ndash;&gt;-->
+<!--        <div class="col-md-4">-->
+<!--            <div class="info">-->
+
+<!--                <small>-->
+<!--                    2FA-->
+<!--                </small>-->
+
+<!--                <strong>-->
+<!--                    Enabled-->
+<!--                </strong>-->
+
+<!--            </div>-->
+<!--        </div>-->
+
+<!--    </div>-->
+
+<!--</main>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments :: head('Dashboard')}"></head>
+
+<body class="dashboard">
+
+<nav class="navbar nav-soft">
+    <div class="container">
+
+        <span class="navbar-brand fw-semibold">
+            Bidding Workspace
+        </span>
+
+        <!-- Logout -->
+        <button type="button"
+                onclick="logout()"
+                class="btn btn-outline-soft btn-sm">
+            Sign out
+        </button>
+
+    </div>
+</nav>
+
+
+<main class="container py-5">
+
+    <!-- Dashboard Header -->
+    <div class="panel">
+
+        <span class="eyebrow">
+            Dashboard
+        </span>
+
+        <h1 class="mt-2">
+            Welcome,
+            <span th:text="${user.fullName}">
+                User
+            </span>
+        </h1>
+
+        <p class="muted">
+            Your account is securely authenticated.
+        </p>
+
+    </div>
+
+
+    <!-- User Information -->
+    <div class="row g-3 mt-1">
+
+        <!-- Email -->
+        <div class="col-md-4">
+
+            <div class="info">
+
+                <small>
+                    Email
+                </small>
+
+                <strong th:text="${user.email}">
+                    email
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- Role -->
+        <div class="col-md-4">
+
+            <div class="info">
+
+                <small>
+                    Role
+                </small>
+
+                <strong th:text="${user.role}">
+                    USER
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- 2FA -->
+        <div class="col-md-4">
+
+            <div class="info">
+
+                <small>
+                    2FA
+                </small>
+
+                <strong>
+                    Enabled
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- ========================================================= -->
+<!-- LOGOUT SCRIPT                                             -->
+<!-- ========================================================= -->
+
+<script th:inline="javascript">
+
+    /*
+     * Access JWT is provided by DashboardController.
+     */
+    const accessToken = /*[[${accessToken}]]*/ '';
+
+
+    async function logout() {
+
+        try {
+
+            const response = await fetch('/logout', {
+
+                method: 'POST',
+
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken
+                }
+
+            });
+
+
+            /*
+             * Logout endpoint returns:
+             *
+             * 302 -> /login
+             *
+             * fetch follows the redirect automatically.
+             */
+            window.location.href = '/login';
+
+
+        } catch (error) {
+
+            console.error('Logout failed:', error);
+
+            /*
+             * Even if the request fails,
+             * send the user back to login.
+             */
+            window.location.href = '/login';
+        }
+
+    }
+
+</script>
+
+</body>
+</html>
